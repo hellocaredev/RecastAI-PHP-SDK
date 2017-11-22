@@ -2,41 +2,63 @@
 
 namespace Tests\RecastAI;
 
+use PHPUnit\Framework\TestCase;
 use RecastAI\Client;
-use RecastAI\Response;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class ClientTest
+ * @package Tests\RecastAI
+ */
+class ClientTest extends TestCase
 {
+    /**
+     * @return bool|string
+     */
     protected static function jsonResponse()
     {
         return file_get_contents(__DIR__ . '/data/Request.json');
     }
 
+    /**
+     *
+     */
     public function testClientClassWithoutLanguage()
     {
         $token = 'TestToken';
-        $this->assertInstanceOf('RecastAI\Client', new Client($token, null));
+        self::assertInstanceOf('RecastAI\Client', new Client($token, null));
     }
 
+    /**
+     *
+     */
     public function testClientClassWithoutToken()
     {
         $language = 'en';
-        $this->assertInstanceOf('RecastAI\Client', new Client(null, $language));
+        self::assertInstanceOf('RecastAI\Client', new Client(null, $language));
     }
 
+    /**
+     *
+     */
     public function testClientClassWithoutTokenAndLanguage()
     {
-        $this->assertInstanceOf('RecastAI\Client', new Client());
+        self::assertInstanceOf('RecastAI\Client', new Client());
     }
 
+    /**
+     *
+     */
     public function testClientClassWithTokenAndLanguage()
     {
         $token = 'TestToken';
         $language = 'en';
 
-        $this->assertInstanceOf('RecastAI\Client', new Client($token, $language));
+        self::assertInstanceOf('RecastAI\Client', new Client($token, $language));
     }
 
+    /**
+     *
+     */
     public function testClientClassIfAttributesAreOkay()
     {
         $token = 'TestToken';
@@ -47,6 +69,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($client->language, $language);
     }
 
+    /**
+     *
+     */
     public function testTextRequestIfAllOkay()
     {
         $callResult = self::jsonResponse();
@@ -68,13 +93,19 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('200', $response->status);
     }
 
+    /**
+     *
+     */
     public function testTextRequestIfNoToken()
     {
         $client = new Client();
-        $res = $client->textRequest('Hello world');
+        $res = $client->request->analyseText('Hello world');
         $this->assertEquals($res, 'Token is missing');
     }
 
+    /**
+     *
+     */
     public function testFileRequestIfAllOkay()
     {
         $callResult = self::jsonResponse();
@@ -101,6 +132,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('200', $response->status);
     }
 
+    /**
+     *
+     */
     public function testFileRequestIfNoToken()
     {
         $client = new Client();

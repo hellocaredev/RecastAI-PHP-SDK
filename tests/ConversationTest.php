@@ -2,27 +2,41 @@
 
 namespace Tests\RecastAI;
 
+use PHPUnit\Framework\TestCase;
 use RecastAI\Conversation;
 
-class ConversationTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class ConversationTest
+ * @package Tests\RecastAI
+ */
+class ConversationTest extends TestCase
 {
+    /**
+     * @return bool|string
+     */
     protected static function jsonResponse()
     {
         return file_get_contents(__DIR__ . '/data/Converse.json');
     }
 
+    /**
+     *
+     */
     public function testConversationClassWithAllOkay()
     {
         $jsonResult = self::jsonResponse();
         $res = (Object)[ "body" => ($jsonResult) ];
-        $this->assertInstanceOf('RecastAI\Conversation', new Conversation(($res)));
+        self::assertInstanceOf('RecastAI\Conversation', new Conversation(null, $res));
     }
 
+    /**
+     *
+     */
     public function testConversationClassAttributes()
     {
         $jsonResult = self::jsonResponse();
         $res = (Object)[ "body" => ($jsonResult) ];
-        $conversation = new Conversation(($res));
+        $conversation = new Conversation(null, $res);
         $result = json_decode($res->body);
 
         $this->assertEquals($conversation->conversationToken, $result->results->conversation_token);
@@ -35,13 +49,16 @@ class ConversationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($conversation->sentiment, $result->results->sentiment);
     }
 
+    /**
+     *
+     */
     public function testResponseClassMethods()
     {
         $jsonResult = self::jsonResponse();
         $res = (Object)[ "body" => ($jsonResult) ];
         $result = json_decode($res->body);
 
-        $conversation = new Conversation($res);
+        $conversation = new Conversation(null, $res);
 
         $this->assertEquals($conversation->reply(), $result->results->replies[0]);
         $this->assertEquals($conversation->joinedReplies(), join(' ', $result->results->replies));

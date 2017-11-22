@@ -2,22 +2,36 @@
 
 namespace Tests\RecastAI;
 
+use PHPUnit\Framework\TestCase;
 use RecastAI\Response;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class ResponseTest
+ * @package Tests\RecastAI
+ */
+class ResponseTest extends TestCase
 {
+    /**
+     * @return bool|string
+     */
     protected static function jsonResponse()
     {
         return file_get_contents(__DIR__ . '/data/Request.json');
     }
 
+    /**
+     *
+     */
     public function testResponseClassWithAllOkay()
     {
         $jsonResult = self::jsonResponse();
         $res = (Object)[ "body" => ($jsonResult) ];
-        $this->assertInstanceOf('RecastAI\Response', new Response($res));
+        self::assertInstanceOf('RecastAI\Response', new Response($res));
     }
 
+    /**
+     *
+     */
     public function testResponseClassAttributes()
     {
         $jsonResult = self::jsonResponse();
@@ -37,11 +51,14 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($response->version, $result->results->{'version'});
         $this->assertEquals($response->timestamp, $result->results->{'timestamp'});
         $this->assertEquals($count, 4);
-        $this->assertInstanceOf('RecastAI\Entity', $response->entities[0]);
+        self::assertInstanceOf('RecastAI\Entity', $response->entities[0]);
         $this->assertInternalType('array', $response->entities);
         $this->assertInternalType('array', $response->intents);
     }
 
+    /**
+     *
+     */
     public function testResponseClassMethods()
     {
         $jsonResult = self::jsonResponse();

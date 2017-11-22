@@ -2,11 +2,18 @@
 
 namespace Tests\RecastAI;
 
+use PHPUnit\Framework\TestCase;
 use RecastAI\Entity;
 
-class EntityTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class EntityTest
+ * @package Tests\RecastAI
+ */
+class EntityTest extends TestCase
 {
-
+    /**
+     *
+     */
     public function testEntityClassShouldBeInstanciable()
     {
         $data1 = (object)[
@@ -21,9 +28,12 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             'raw' => 'asparagus',
         ];
 
-        $this->assertInstanceOf('RecastAI\Entity', new Entity('ingredient', $data2));
+        self::assertInstanceOf('RecastAI\Entity', new Entity('ingredient', $data2));
     }
 
+    /**
+     *
+     */
     public function testEntityClassShouldHaveAttributes()
     {
         $data1 = (object)[
