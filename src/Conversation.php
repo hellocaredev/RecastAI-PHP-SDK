@@ -40,12 +40,12 @@ class Conversation
         $this->source = $responseBody->source;
         $this->replies = $responseBody->replies;
         $this->action = $responseBody->action;
-        $this->nextActions = $responseBody->nextActions;
+        $this->nextActions = $responseBody->next_actions;
         $this->memory = $responseBody->memory;
         $this->entities = $responseBody->entities;
         $this->sentiment = $responseBody->sentiment;
         $this->intents = $responseBody->intents;
-        $this->conversationToken = $responseBody->conversationToken;
+        $this->conversationToken = $responseBody->conversation_token;
         $this->language = $responseBody->language;
         $this->processing_language = $responseBody->processing_language;
         $this->version = $responseBody->version;
